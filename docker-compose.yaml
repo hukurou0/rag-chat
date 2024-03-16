@@ -1,13 +1,21 @@
 version: '3.9'
 services:
-  react-app:
-    container_name: rag-chat-front
+  front:
     build:
       context: ./front
       dockerfile: Dockerfile
     volumes:
       - ./front:/usr/src/front # ローカルをコンテナ内にマウント
-    #command: sh -c "npm i && npm start"
     ports:
       - "3000:3000"
     stdin_open: true 
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+    volumes:
+      - ./api:/usr/src/app
