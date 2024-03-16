@@ -1,15 +1,25 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
+import { postData } from '../../utils/fetch'
 
 export default function Text () {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
   const onClick = () => {
-    console.log(title)
-    console.log(content)
-  }
+    const url = 'http://localhost:5000/'; // POSTリクエストを送信するURL
+    const data = { // 送信するデータ
+      title: title,
+      content: content,
+    };
+
+
+    postData(url, data)
+      .then(response => response.json()) // JSON形式のレスポンスをパース
+      .then(data => console.log(data)) // レスポンスデータをコンソールに表示
+      .catch(error => console.error('There was an error!', error));
+    }
 
   return (
     <div>

@@ -5,7 +5,10 @@ services:
       context: ./front
       dockerfile: Dockerfile
     volumes:
-      - ./front:/usr/src/front # ローカルをコンテナ内にマウント
+      #- ./front:/usr/src/front # ローカルをコンテナ内にマウント
+      - type: bind
+        source: ./front
+        target: /usr/src/front
     ports:
       - "3000:3000"
     stdin_open: true 
@@ -18,4 +21,7 @@ services:
     environment:
       - FLASK_ENV=development
     volumes:
-      - ./api:/usr/src/app
+      #- ./api:/usr/src/app
+      - type: bind
+        source: ./api
+        target: /usr/src/api
